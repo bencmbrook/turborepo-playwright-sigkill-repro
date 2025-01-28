@@ -75,5 +75,7 @@ export default defineConfig({
     command: 'pnpm exec turbo run dev',
     url: 'http://127.0.0.1:3002',
     reuseExistingServer: !process.env.CI,
+    // Try SIGINT, and if that doesn't work after 10 seconds, send SIGKILL
+    gracefulShutdown: { signal: 'SIGINT', timeout: 10_000 },
   },
 });
