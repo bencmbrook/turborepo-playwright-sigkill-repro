@@ -1,5 +1,7 @@
 # Repro
 
+## Instructions 
+
 1. Confirm port 3002 is not in use. `lsof -i:3002` should print nothing.
 2. `pnpm i`
 3. `cd apps/web`
@@ -7,9 +9,19 @@
 5. Run `lsof -i:3002`. You will see the service is still running. 
     - You can also go to [http://localhost:3002](http://localhost:3002) to verify the web server process is still running.
 
-_To clean up:_ `kill $(lsof -t -i:3002)`
+## Repro notes
 
-# Turborepo starter
+- Playwright is sending a `SIGKILL` to [this process in `playwright.config.ts`](/apps/web/playwright.config.ts#L75).
+- If you have `turbo` installed globally, you can remove the `pnpm exec` to rule out `pnpm` as the culprit.
+
+## Cleaning up on your machine
+
+```sh
+kill -9 $(lsof -t -i:3001) # kill `docs` process
+kill -9 $(lsof -t -i:3002) # kill `web` process
+```
+
+# [Orignal Readme] Turborepo starter
 
 This Turborepo starter is maintained by the Turborepo core team.
 
