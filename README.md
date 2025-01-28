@@ -5,8 +5,8 @@
 1. Confirm port 3002 is not in use. `lsof -i:3002` should print nothing.
 2. `pnpm i`
 3. `cd apps/web`
-4. `pnpm exec playwright test`
-5. Run `lsof -i:3002`. You will see the service is still running. 
+4. `pnpm exec playwright test`. The test will run and the command should exit successfully.
+5. Now run `lsof -i:3002`. You will see the service is still running, even though the process finished.
     - You can also go to [http://localhost:3002](http://localhost:3002) to verify the web server process is still running.
 
 ## Repro notes
@@ -20,6 +20,8 @@
 kill -9 $(lsof -t -i:3001) # kill `docs` process
 kill -9 $(lsof -t -i:3002) # kill `web` process
 ```
+
+Issue Link: https://github.com/vercel/turborepo/issues/9666
 
 # [Orignal Readme] Turborepo starter
 
